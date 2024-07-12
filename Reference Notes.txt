@@ -1,0 +1,47 @@
+Reference Notes
+
+git init
+git status
+git add .
+git commit -m"[Renuka]Added : Created new BookStore Project"
+git remote add origin https://github.com/Renu2001/BookStore.git
+git push origin master
+git checkout -b User  [creates new branch and switch to it]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
