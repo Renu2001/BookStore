@@ -72,3 +72,4 @@ D:\BRIDGELABZ\BookStore\BookStore\obj\Debug\net6.0\BookStore.genruntimeconfig.ca
 D:\BRIDGELABZ\BookStore\BookStore\obj\Debug\net6.0\ref\BookStore.dll
 D:\BRIDGELABZ\BookStore\BookStore\bin\Debug\net6.0\MediatR.dll
 D:\BRIDGELABZ\BookStore\BookStore\bin\Debug\net6.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+D:\BRIDGELABZ\BookStore\BookStore\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -23,7 +23,7 @@ namespace BusinessLayer.Service
             this.mediator = mediator;
         }
 
-        public async Task<bool> Login(LoginModel login)
+        public async Task<string> Login(LoginModel login)
         {
             var result = await mediator.Send(new GetUserByEmailQuery(login.email,login.password));
             return result;

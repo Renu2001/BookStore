@@ -84,10 +84,13 @@ EntityFrameworkCore.Design
 EntityFrameworkCore.Relational
 EntityFrameworkCore.SqlServer
 EntityFrameworkCore.Tools
+Microsoft.AspNetCore.Authentication.JwtBearer
 
 in Project layer
+MediatR.Extensions.Microsoft.DependencyInjection
 EntityFrameworkCore
 EntityFrameworkCore.Design
+Microsoft.AspNetCore.Authentication.JwtBearer
 
 --configure entity in context class
 

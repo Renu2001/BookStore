@@ -10,7 +10,7 @@ namespace BusinessLayer.Interface
 {
     public interface IUserBL 
     {
-        Task<bool> Login(LoginModel login);
+        Task<string> Login(LoginModel login);
         Task<UserEntity> Register(UserModel model, string role);
     }
 }

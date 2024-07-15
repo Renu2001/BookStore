@@ -10,7 +10,7 @@ namespace RepositoryLayer.Interface
 {
     public interface IUserRL
     {
-        Task<bool> Login(LoginModel login);
+        Task<string> Login(LoginModel login);
         Task<UserEntity> Register(UserEntity model);
     }
 }

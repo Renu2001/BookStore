@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryLayer.CQRS.Queries.User
 {
-    public class GetUserByEmailQuery : IRequest<bool>
+    public class GetUserByEmailQuery : IRequest<string>
     {
         public string email { get; set; }
         public string password { get; set; }

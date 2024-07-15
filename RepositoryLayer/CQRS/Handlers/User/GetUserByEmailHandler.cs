@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryLayer.CQRS.Handlers.User
 {
-    public class GetUserByEmailHandler : IRequestHandler<GetUserByEmailQuery, bool>
+    public class GetUserByEmailHandler : IRequestHandler<GetUserByEmailQuery, string>
     {
         private readonly IUserRL _userRL;
 
@@ -19,7 +19,7 @@ namespace RepositoryLayer.CQRS.Handlers.User
         {
             _userRL = userRL;
         }
-        public Task<bool> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
+        public Task<string> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
             var login = new LoginModel()
             {

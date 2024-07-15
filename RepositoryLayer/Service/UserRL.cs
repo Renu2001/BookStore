@@ -17,12 +17,13 @@ namespace RepositoryLayer.Service
     public class UserRL : IUserRL
     {
         private readonly BookStoreContext _bookStoreContext;
-        //private readonly PasswordHashing hashing;
+        private readonly Token _token;
 
-        public UserRL(BookStoreContext bookStoreContext)
+
+        public UserRL(BookStoreContext bookStoreContext, Token token)
         {
             _bookStoreContext = bookStoreContext;
-            //this.hashing = hashing;
+            _token = token;
         }
 
         public async Task<UserEntity> Register(UserEntity entity)
@@ -48,7 +49,7 @@ namespace RepositoryLayer.Service
             return decryptedPassword == password;
         }
 
-        public Task<bool> Login(LoginModel login)
+        public Task<string> Login(LoginModel login)
         {
             var user = _bookStoreContext.Users.FirstOrDefault(x => x.email == login.email);
             var result = ValidateUser(user.email, login.password);
@@ -62,7 +63,8 @@ namespace RepositoryLayer.Service
             }
             else
             {
-                return Task.FromResult(true);
+                var token = _token.GenerateToken(user);
+                return Task.FromResult(token);
             }
 
 
