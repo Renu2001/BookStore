@@ -7,30 +7,106 @@ git commit -m"[Renuka]Added : Created new BookStore Project"
 git remote add origin https://github.com/Renu2001/BookStore.git
 git push origin master
 git checkout -b User  [creates new branch and switch to it]
+-----------------------------------------------------------------
+Extra notes: 
+
+// delete branch locally
+git branch -d localBranchName
+
+// delete branch remotely
+git push origin --delete remoteBranchName
+
+git ignore file
+//git bash
+------------------------------------------------------------------
+touch .gitignore
+//Add the file you need to ignore 
+
+git status 
+git add .
+git commit -m"[Renuka]Added : Created gitignore file"
+git push origin master
+
+ //if it does not happen try this
+git rm -rf --cached .
+git add .
+git commit -m"[Renuka]Added : Created gitignore file"
+git push origin master
+------------------------------------------------------------------
+Project Structure
+
+BookStore
+BusinessLayer[Class Library]
+-Interface
+-Services
+RepositoryLayer[Class Library]
+-Context
+-CQRS
+--Command
+--Query
+--Handlers
+-Entity
+-Exception
+-Interface
+-Services
+-Utility
+ModelLayer[Class Library]
+
+project reference
+
+BookStore 
+    |
+
+BusinessLayer
+RepositoryLayer
+
+BusinessLayer
+      |
+      |
+RepositoryLayer
+      |
+ModelLayer
+
+project reference
+
+--Add entity
+--Add connection string in Appsetting
+"ConnectionStrings": {
+  "Default": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BookStore;Integrated Security=True;"
+}
 
 
+Add the required packages
+in repo layer
+MediatR
+EntityFrameworkCore
+EntityFrameworkCore.Design
+EntityFrameworkCore.Relational
+EntityFrameworkCore.SqlServer
+EntityFrameworkCore.Tools
+
+in Project layer
+EntityFrameworkCore
+EntityFrameworkCore.Design
+
+--configure entity in context class
+
+public BookStoreContext(DbContextOptions options) : base(options) { }
+
+public DbSet<UserEntity>? Users { get; set; }
+
+--configure in program.cs
+
+builder.Services.AddDbContext<BookStoreContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+});
 
 
+Package Manager Console
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Add-Migration firstcreate
+Update-Database
 
 
 
