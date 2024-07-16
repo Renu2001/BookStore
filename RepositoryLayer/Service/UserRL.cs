@@ -46,7 +46,7 @@ namespace RepositoryLayer.Service
             if (user == null) return false;
 
             var decryptedPassword = PasswordHashing.Decrypt(user.password);
-            return decryptedPassword == password;
+            return decryptedPassword.Equals(password);
         }
 
         public Task<string> Login(LoginModel login)

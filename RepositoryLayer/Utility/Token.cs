@@ -30,6 +30,7 @@ namespace RepositoryLayer.Utility
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.firstName),
+                new Claim("Id", user.userId.ToString()),
                 new Claim("Email", user.email),
                 new Claim(ClaimTypes.Role,user.roles)
             };

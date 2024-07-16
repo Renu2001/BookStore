@@ -114,7 +114,15 @@ Update-Database
 
 
 
+{
+  "email": "rashi@gmail.com",
+  "password": "Rashi@1234"
+}
 
+{
+  "email": "maya@gmail.com",
+  "password": "Maya@1234"
+}
 
 
 

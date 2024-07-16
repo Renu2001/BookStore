@@ -51,6 +51,8 @@ namespace BookStore
 
             builder.Services.AddScoped<IUserRL, UserRL>();
             builder.Services.AddScoped<IUserBL, UserBL>();
+            builder.Services.AddScoped<IBookRL, BookRL>();
+            builder.Services.AddScoped<IBookBL, BookBL>();
             builder.Services.AddScoped<Token>();
 
 
@@ -69,8 +71,9 @@ namespace BookStore
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
 
             app.MapControllers();

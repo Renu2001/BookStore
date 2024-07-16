@@ -14,9 +14,9 @@ namespace RepositoryLayer.Utility
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Convert.FromBase64String(EncryptionKey);
-                aesAlg.IV = GenerateRandomIV(); 
+                aesAlg.IV = GenerateRandomIV(); // Generate a random IV for each encryption
 
-                aesAlg.Padding = PaddingMode.PKCS7; 
+                aesAlg.Padding = PaddingMode.PKCS7; // Set the padding mode to PKCS7
 
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
@@ -37,13 +37,13 @@ namespace RepositoryLayer.Utility
         public static string Decrypt(string cipherText)
         {
             byte[] cipherBytes = Convert.FromBase64String(cipherText);
-
+            Console.WriteLine(cipherText);
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Convert.FromBase64String(EncryptionKey);
                 aesAlg.IV = cipherBytes.Take(16).ToArray();
 
-                aesAlg.Padding = PaddingMode.PKCS7; 
+                aesAlg.Padding = PaddingMode.PKCS7; // Set the padding mode to PKCS7
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
@@ -53,6 +53,7 @@ namespace RepositoryLayer.Utility
                     {
                         using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                         {
+                            Console.WriteLine(srDecrypt.ReadToEnd());
                             return srDecrypt.ReadToEnd();
                         }
                     }

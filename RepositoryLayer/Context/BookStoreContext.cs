@@ -13,6 +13,7 @@ namespace RepositoryLayer.Context
         public BookStoreContext(DbContextOptions options) : base(options) { }
 
         public DbSet<UserEntity>? Users { get; set; }
+        public DbSet<BookEntity>? Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

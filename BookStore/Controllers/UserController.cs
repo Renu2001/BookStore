@@ -50,7 +50,7 @@ namespace BookStore.Controllers
             return StatusCode(201, resmodel);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("Register/User")]
         public async Task<IActionResult> RegisterUser(UserModel model, string role = "User")
         {
