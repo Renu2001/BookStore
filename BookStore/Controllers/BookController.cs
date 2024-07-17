@@ -51,7 +51,7 @@ namespace BookStore.Controllers
             return StatusCode(201, resmodel);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost("UpdateBook")]
         public async Task<IActionResult> UpdateBookAsync(int bookId,BookModel model)
         {
@@ -84,7 +84,7 @@ namespace BookStore.Controllers
             return StatusCode(201, resmodel);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost("DeleteBook")]
         public async Task<IActionResult> DeleteBookAsync(int id)
         {
@@ -115,7 +115,7 @@ namespace BookStore.Controllers
             return StatusCode(201, resmodel);
         }
 
-        [Authorize(Roles = "Admin")]
+
         [HttpPost("GetAllBook")]
         public async Task<IActionResult> GetAllBooksAsync()
         {
@@ -146,7 +146,6 @@ namespace BookStore.Controllers
             return StatusCode(201, resmodel);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost("GetBookById")]
         public async Task<IActionResult> GetBookById(int id)
         {

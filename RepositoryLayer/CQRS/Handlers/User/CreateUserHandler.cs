@@ -24,12 +24,11 @@ namespace RepositoryLayer.CQRS.Handlers.User
         {
             UserEntity userEntity = new UserEntity()
             {
-                firstName = request.firstName,
-                lastName = request.lastName,
-                email = request.email,
-                phoneNumber = request.phoneNumber,
-                password = request.password,
-                roles = request.role
+                Name = request.firstName,
+                Email = request.email,
+                PhoneNumber = request.phoneNumber,
+                Password = request.password,
+                Roles = request.role
             };
             var result = _userRL.Register(userEntity);
             return result;

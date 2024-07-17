@@ -42,17 +42,20 @@ namespace RepositoryLayer.Service
 
         public bool ValidateUser(string email, string password)
         {
-            var user = _bookStoreContext.Users.FirstOrDefault(u => u.email == email);
+            var user = _bookStoreContext.Users.FirstOrDefault(u => u.Email == email);
             if (user == null) return false;
 
-            var decryptedPassword = PasswordHashing.Decrypt(user.password);
-            return decryptedPassword.Equals(password);
+            string decryptedPassword = PasswordHashing.Decrypt(user.Password);
+            Console.WriteLine($"password : {password}");
+            Console.WriteLine($"Derypted pass : {decryptedPassword}");
+            Console.WriteLine($"Boolean: {decryptedPassword == password}");
+            return (decryptedPassword == password);
         }
 
         public Task<string> Login(LoginModel login)
         {
-            var user = _bookStoreContext.Users.FirstOrDefault(x => x.email == login.email);
-            var result = ValidateUser(user.email, login.password);
+            var user = _bookStoreContext.Users.FirstOrDefault(x => x.Email == login.email);
+            var result = ValidateUser(user.Email, login.password);
             if (user == null)
             {
                 throw new CustomException("User does not exist. Please register first.");

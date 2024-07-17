@@ -23,13 +23,13 @@ namespace RepositoryLayer.CQRS.Handlers.Book
         {
             BookEntity bookEntity = new BookEntity()
             {
-                bookName = request.BookName,
-                description = request.Description,
-                price = request.Price,
-                discountPrice = request.DiscountPrice,
-                quantity = request.Quantity,
-                author = request.Author,
-                bookImage = request.BookImage,
+                BookName = request.BookName,
+                Description = request.Description,
+                Price = request.Price,
+                DiscountPrice = request.DiscountPrice,
+                Quantity = request.Quantity,
+                Author = request.Author,
+                BookImage = request.BookImage,
                 UserEntityId = request.Admin_Id
             };
             var result = await _bookRL.UpdateBook(request.Id,bookEntity);

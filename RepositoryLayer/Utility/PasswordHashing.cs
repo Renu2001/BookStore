@@ -7,16 +7,18 @@ namespace RepositoryLayer.Utility
 {
     public static class PasswordHashing
     {
-        private static readonly string EncryptionKey = GenerateRandomKey(256);
+        private static readonly string EncryptionKey = "b14ca5898a4e4133bbce2ea2315a1916";
+        private static readonly string iv = "1234567890123456";
+
 
         public static string Encrypt(string plainText)
         {
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Convert.FromBase64String(EncryptionKey);
-                aesAlg.IV = GenerateRandomIV(); // Generate a random IV for each encryption
+                aesAlg.IV = Encoding.UTF8.GetBytes(iv);
 
-                aesAlg.Padding = PaddingMode.PKCS7; // Set the padding mode to PKCS7
+                aesAlg.Padding = PaddingMode.PKCS7;
 
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
@@ -37,13 +39,13 @@ namespace RepositoryLayer.Utility
         public static string Decrypt(string cipherText)
         {
             byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            Console.WriteLine(cipherText);
+
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = Convert.FromBase64String(EncryptionKey);
                 aesAlg.IV = cipherBytes.Take(16).ToArray();
 
-                aesAlg.Padding = PaddingMode.PKCS7; // Set the padding mode to PKCS7
+                aesAlg.Padding = PaddingMode.PKCS7;
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
@@ -53,7 +55,6 @@ namespace RepositoryLayer.Utility
                     {
                         using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                         {
-                            Console.WriteLine(srDecrypt.ReadToEnd());
                             return srDecrypt.ReadToEnd();
                         }
                     }

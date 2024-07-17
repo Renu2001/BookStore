@@ -29,34 +29,34 @@ namespace RepositoryLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BookImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BookName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiscountPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserEntityId")
                         .HasColumnType("int")
                         .HasColumnName("admin_Id");
-
-                    b.Property<string>("author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("bookImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("bookName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("discountPrice")
-                        .HasColumnType("int");
-
-                    b.Property<int>("price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -65,40 +65,102 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("RepositoryLayer.Entity.UserEntity", b =>
+            modelBuilder.Entity("RepositoryLayer.Entity.CartEntity", b =>
                 {
-                    b.Property<int>("userId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("userId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("email")
+                    b.Property<int>("BookId")
+                        .HasColumnType("int")
+                        .HasColumnName("book_Id");
+
+                    b.Property<bool>("IsPurchased")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("User_Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.CustomerDetailsEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserEntityId")
+                        .HasColumnType("int")
+                        .HasColumnName("User_Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserEntityId");
+
+                    b.ToTable("CustomerDetails");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.UserEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("firstName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("lastName")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("phoneNumber")
+                    b.Property<long>("PhoneNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("roles")
+                    b.Property<string>("Roles")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("userId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("email")
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Users");
@@ -106,13 +168,57 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RepositoryLayer.Entity.BookEntity", b =>
                 {
-                    b.HasOne("RepositoryLayer.Entity.UserEntity", "User")
-                        .WithMany()
+                    b.HasOne("RepositoryLayer.Entity.UserEntity", "Users")
+                        .WithMany("Books")
                         .HasForeignKey("UserEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.CartEntity", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entity.BookEntity", "BookEntity")
+                        .WithMany("Carts")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RepositoryLayer.Entity.UserEntity", "UserEntity")
+                        .WithMany("Carts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("BookEntity");
+
+                    b.Navigation("UserEntity");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.CustomerDetailsEntity", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entity.UserEntity", "Users")
+                        .WithMany("CustomerDetails")
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.BookEntity", b =>
+                {
+                    b.Navigation("Carts");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.UserEntity", b =>
+                {
+                    b.Navigation("Books");
+
+                    b.Navigation("Carts");
+
+                    b.Navigation("CustomerDetails");
                 });
 #pragma warning restore 612, 618
         }

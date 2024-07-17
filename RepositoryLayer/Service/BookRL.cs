@@ -95,13 +95,13 @@ namespace RepositoryLayer.Service
                 }
                 if (book != null)
                 {
-                    book.bookName = bookEntity.bookName;
-                    book.description = bookEntity.description;
-                    book.price = bookEntity.price;
-                    book.discountPrice = bookEntity.discountPrice;
-                    book.quantity = bookEntity.quantity;
-                    book.author = bookEntity.author;
-                    book.bookImage = bookEntity.bookImage;
+                    book.BookName = bookEntity.BookName;
+                    book.Description = bookEntity.Description;
+                    book.Price = bookEntity.Price;
+                    book.DiscountPrice = bookEntity.DiscountPrice;
+                    book.Quantity = bookEntity.Quantity;
+                    book.Author = bookEntity.Author;
+                    book.BookImage = bookEntity.BookImage;
                     book.UserEntityId=bookEntity.UserEntityId;
                 }
                  _bookStoreContext.Books.Update(book);

@@ -15,24 +15,26 @@ namespace RepositoryLayer.Entity
         public int Id { get; set; }
 
         [Required]
-        public string bookName {  get; set; }
+        public string BookName {  get; set; }
         [Required]
-        public string description { get; set; }
+        public string Description { get; set; }
         [Required]
-        public int price {  get; set; }
+        public int Price {  get; set; }
         [Required]
-        public int discountPrice { get; set; }
+        public int DiscountPrice { get; set; }
         [Required]
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
         [Required]
-        public string author { get; set; }
+        public string Author { get; set; }
         [Required]
-        public string bookImage { get; set; }
+        public string BookImage { get; set; }
 
         [ForeignKey("UserEntity")]
         [Column("admin_Id")]
         public int UserEntityId {  get; set; }
-        public UserEntity? User { get; set; }
+        public UserEntity? Users { get; set; }
+
+        public ICollection<CartEntity> Carts { get; } = new List<CartEntity>();
 
 
     }
