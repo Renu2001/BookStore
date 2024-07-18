@@ -56,7 +56,7 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                var result = await _bookStoreContext.Books.ToListAsync();
+                var result = await _bookStoreContext.Books.Include(x => x.Users).ToListAsync();
                 if (result == null)
                     throw new CustomException("No Books Found");
                 return result;

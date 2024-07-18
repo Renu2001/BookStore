@@ -62,32 +62,5 @@ namespace RepositoryLayer.Utility
             }
         }
 
-        private static byte[] GenerateRandomIV()
-        {
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.GenerateIV();
-                return aesAlg.IV;
-            }
-        }
-
-        private static string GenerateRandomKey(int keySizeInBits)
-        {
-            // Convert the key size to bytes
-            int keySizeInBytes = keySizeInBits / 8;
-
-            // Create a byte array to hold the random key
-            byte[] keyBytes = new byte[keySizeInBytes];
-
-            // Use a cryptographic random number generator to fill the byte array
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(keyBytes);
-            }
-
-            // Convert the byte array to a base64-encoded string for storage
-            return Convert.ToBase64String(keyBytes);
-        }
-
     }
 }

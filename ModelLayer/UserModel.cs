@@ -10,18 +10,15 @@ namespace ModelLayer
     public class UserModel
     {
         [Required]
-        public string firstName { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string lastName { get; set; }
+        public string Email { get; set; }
 
         [Required]
-        public string email { get; set; }
+        public long PhoneNumber { get; set; }
 
         [Required]
-        public long phoneNumber { get; set; }
-
-        [Required]
-        public string password { get; set; }
+        public string Password { get; set; }
     }
 }

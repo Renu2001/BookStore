@@ -93,7 +93,7 @@ namespace BookStore.Controllers
                     resmodel = new ResponseModel()
                     {
                         Success = "true",
-                        Message = "Book Added to Cart Successfully",
+                        Message = "Book Deleted from Cart Successfully",
                         Data = result
                     };
 

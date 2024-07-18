@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
 
 namespace RepositoryLayer.Entity
 {
@@ -30,9 +31,13 @@ namespace RepositoryLayer.Entity
         [Required]
         public string Roles { get; set; }
 
-        public ICollection<BookEntity> Books { get; } = new List<BookEntity>();
-        public ICollection<CartEntity> Carts { get; } = new List<CartEntity>();
-        public ICollection<CustomerDetailsEntity> CustomerDetails { get; } = new List<CustomerDetailsEntity>();
+        [JsonIgnore]
+        public ICollection<BookEntity> Books { get; }
+
+        [JsonIgnore]
+        public ICollection<CartEntity> Carts { get; }
+        [JsonIgnore]
+        public ICollection<CustomerDetailsEntity> CustomerDetails { get; }
 
 
 

@@ -57,7 +57,7 @@ namespace BookStore.Controllers
         {
             try
             {
-                var id = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == "Id"));
+                var id = Convert.ToInt32(User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
                 
                 var result = await _bookBL.UpdateBook(bookId, model, id);
                 if (result != null)
@@ -86,11 +86,11 @@ namespace BookStore.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost("DeleteBook")]
-        public async Task<IActionResult> DeleteBookAsync(int id)
+        public async Task<IActionResult> DeleteBookAsync(int bookid)
         {
             try
             {
-                var result = await _bookBL.DeleteBook(id);
+                var result = await _bookBL.DeleteBook(bookid);
                 if (result != null)
                 {
                     resmodel = new ResponseModel()
@@ -147,11 +147,11 @@ namespace BookStore.Controllers
         }
 
         [HttpPost("GetBookById")]
-        public async Task<IActionResult> GetBookById(int id)
+        public async Task<IActionResult> GetBookById(int bookid)
         {
             try
             {
-                var result = await _bookBL.GetBookById(id);
+                var result = await _bookBL.GetBookById(bookid);
                 if (result != null)
                 {
                     resmodel = new ResponseModel()

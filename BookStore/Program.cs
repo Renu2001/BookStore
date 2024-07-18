@@ -55,6 +55,8 @@ namespace BookStore
             builder.Services.AddScoped<IBookBL, BookBL>();
             builder.Services.AddScoped<ICartRL, CartRL>();
             builder.Services.AddScoped<ICartBL, CartBL>();
+            builder.Services.AddScoped<ICustomerDetailsRL, CustomerDetailsRL>();
+            builder.Services.AddScoped<ICustomerDetailsBL, CustomerDetailsBL>();
             builder.Services.AddScoped<Token>();
 
 

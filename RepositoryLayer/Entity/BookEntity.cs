@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RepositoryLayer.Entity
@@ -34,7 +35,8 @@ namespace RepositoryLayer.Entity
         public int UserEntityId {  get; set; }
         public UserEntity? Users { get; set; }
 
-        public ICollection<CartEntity> Carts { get; } = new List<CartEntity>();
+        [JsonIgnore]
+        public ICollection<CartEntity> Carts { get; } 
 
 
     }

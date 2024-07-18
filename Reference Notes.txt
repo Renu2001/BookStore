@@ -115,20 +115,17 @@ Update-Database
 
 
 {
-  "email": "rashi@gmail.com",
-  "password": "Rashi@1234"
+  "email": "renu@gmail.com",
+  "password": "Renu@1234"
 }
+
+
+
+
+
+
 
 {
-  "email": "maya@gmail.com",
-  "password": "Maya@1234"
+  "bookId": 0,
+  "quantity": 0
 }
-
-
-
-
-
-
-
-
-

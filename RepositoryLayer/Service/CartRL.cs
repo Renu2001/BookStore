@@ -24,6 +24,9 @@ namespace RepositoryLayer.Service
         {
             try
             {
+                var result = _bookStoreContext.Carts.FirstOrDefault(x => x.UserId == userId && x.BookId == bookId);
+                if (result != null)
+                    throw new CustomException("Book Already Exist in Cart");
                 CartEntity cart = new CartEntity()
                 {
                     Quantity = quantity,
@@ -45,7 +48,7 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                var result = await _bookStoreContext.Carts.Where(x => x.UserId == userid).ToListAsync();
+                var result = await _bookStoreContext.Carts.Where(x => x.UserId == userid).Include(x => x.UserEntity).Include(x => x.BookEntity).ToListAsync();
                 if (result == null)
                     throw new CustomException("Nothing Found");
                 return result;

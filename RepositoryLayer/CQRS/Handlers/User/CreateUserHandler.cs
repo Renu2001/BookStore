@@ -24,7 +24,7 @@ namespace RepositoryLayer.CQRS.Handlers.User
         {
             UserEntity userEntity = new UserEntity()
             {
-                Name = request.firstName,
+                Name = request.Name,
                 Email = request.email,
                 PhoneNumber = request.phoneNumber,
                 Password = request.password,

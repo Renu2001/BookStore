@@ -11,7 +11,7 @@ using RepositoryLayer.Context;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    [Migration("20240717094647_EntityCreation")]
+    [Migration("20240718055410_EntityCreation")]
     partial class EntityCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

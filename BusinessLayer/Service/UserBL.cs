@@ -33,8 +33,8 @@ namespace BusinessLayer.Service
         {
             try
             { 
-                var password = PasswordHashing.Encrypt(model.password);
-                var result = await mediator.Send(new CreateUserCommand(model.firstName,model.lastName,model.email, model.phoneNumber, password, role));
+                var password = PasswordHashing.Encrypt(model.Password);
+                var result = await mediator.Send(new CreateUserCommand(model.Name,model.Email, model.PhoneNumber, password, role));
                 return result;
             }
             catch
