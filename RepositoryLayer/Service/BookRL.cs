@@ -72,7 +72,7 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                var result = await _bookStoreContext.Books.FirstOrDefaultAsync(x => x.Id == id);
+                var result = await _bookStoreContext.Books.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == id);
                 if (result == null)
                     throw new CustomException("No Book Found");
                 return result;

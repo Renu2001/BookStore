@@ -16,6 +16,8 @@ namespace RepositoryLayer.Context
         public DbSet<BookEntity>? Books { get; set; }
         public DbSet<CartEntity>? Carts { get; set; }
         public DbSet<CustomerDetailsEntity>? CustomerDetails { get; set; }
+        public DbSet <OrderEntity>? Orders { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +34,12 @@ namespace RepositoryLayer.Context
                .HasOne(c => c.BookEntity)
                .WithMany(c => c.Carts)
                .HasForeignKey(c => c.BookId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<OrderEntity>()
+               .HasOne(c => c.User)
+               .WithMany(c => c.Orders)
+               .HasForeignKey(c => c.UserEntityId)
                .OnDelete(DeleteBehavior.NoAction);
 
         }

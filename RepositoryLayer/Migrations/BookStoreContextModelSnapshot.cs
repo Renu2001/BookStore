@@ -83,6 +83,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("User_Id");
@@ -129,6 +132,43 @@ namespace RepositoryLayer.Migrations
                     b.HasIndex("UserEntityId");
 
                     b.ToTable("CustomerDetails");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.OrderEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int")
+                        .HasColumnName("Cart_Id");
+
+                    b.Property<int>("CustomersDetailsId")
+                        .HasColumnType("int")
+                        .HasColumnName("CustomersDetails_Id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserEntityId")
+                        .HasColumnType("int")
+                        .HasColumnName("User_Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("CustomersDetailsId");
+
+                    b.HasIndex("UserEntityId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entity.UserEntity", b =>
@@ -207,9 +247,46 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entity.OrderEntity", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entity.CartEntity", "Cart")
+                        .WithMany("Orders")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RepositoryLayer.Entity.CustomerDetailsEntity", "CustomersDetails")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomersDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RepositoryLayer.Entity.UserEntity", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("CustomersDetails");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entity.BookEntity", b =>
                 {
                     b.Navigation("Carts");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.CartEntity", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.CustomerDetailsEntity", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entity.UserEntity", b =>
@@ -219,6 +296,8 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("CustomerDetails");
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

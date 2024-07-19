@@ -27,11 +27,14 @@ namespace RepositoryLayer.Service
                 var result = _bookStoreContext.Carts.FirstOrDefault(x => x.UserId == userId && x.BookId == bookId);
                 if (result != null)
                     throw new CustomException("Book Already Exist in Cart");
+
+                var book = _bookStoreContext.Books.FirstOrDefault(x => x.Id == bookId);
                 CartEntity cart = new CartEntity()
                 {
                     Quantity = quantity,
                     BookId = bookId,
-                    UserId = userId
+                    UserId = userId,
+                    TotalPrice = quantity * book.DiscountPrice
                 };
                 _bookStoreContext.Carts.Add(cart);
                 await _bookStoreContext.SaveChangesAsync();
@@ -79,7 +82,7 @@ namespace RepositoryLayer.Service
 
         public async Task<CartEntity> UpdateQuantity(int bookId, int quantity, int userId)
         {
-            var book = _bookStoreContext.Carts.FirstOrDefault(x => x.Id == bookId && x.UserId == userId);
+            var book = _bookStoreContext.Carts.Include(x=>x.BookEntity).FirstOrDefault(x => x.Id == bookId && x.UserId == userId);
             if (book == null)
             {
                 throw new CustomException("Book Doesnt exists");
@@ -89,6 +92,7 @@ namespace RepositoryLayer.Service
                 book.Quantity = quantity;
                 book.UserId = userId;
                 book.BookId = bookId;
+                book.TotalPrice = quantity * book.BookEntity.DiscountPrice;
             }
             _bookStoreContext.Carts.Update(book);
             await _bookStoreContext.SaveChangesAsync();

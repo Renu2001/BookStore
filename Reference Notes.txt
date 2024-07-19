@@ -115,17 +115,11 @@ Update-Database
 
 
 {
-  "email": "renu@gmail.com",
+  "email": "renu@123gmail.com",
   "password": "Renu@1234"
 }
 
-
-
-
-
-
-
 {
-  "bookId": 0,
-  "quantity": 0
+  "email": "dhiri@gmail.com",
+  "password": "Dhiri@12345"
 }

@@ -32,14 +32,19 @@ namespace RepositoryLayer.Entity
         public string Roles { get; set; }
 
         [JsonIgnore]
-        public ICollection<BookEntity> Books { get; }
+        public ICollection<BookEntity> Books { get; set; }
 
         [JsonIgnore]
-        public ICollection<CartEntity> Carts { get; }
+        public ICollection<CartEntity> Carts  { get; set; }
+
         [JsonIgnore]
-        public ICollection<CustomerDetailsEntity> CustomerDetails { get; }
+        public ICollection<CustomerDetailsEntity> CustomerDetails { get; set; }
 
+        [JsonIgnore]
+        public ICollection<OrderEntity> Orders { get; set; }
 
+        [JsonIgnore]
+        public ICollection<WishListEntity> WishList { get; set; }
 
     }
 }
