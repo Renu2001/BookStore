@@ -18,12 +18,13 @@ namespace RepositoryLayer.Service
     {
         private readonly BookStoreContext _bookStoreContext;
         private readonly Token _token;
+        private readonly Email _email;
 
-
-        public UserRL(BookStoreContext bookStoreContext, Token token)
+        public UserRL(BookStoreContext bookStoreContext, Token token, Email email)
         {
             _bookStoreContext = bookStoreContext;
             _token = token;
+            _email = email;
         }
 
         public async Task<UserEntity> Register(UserEntity entity)
@@ -34,6 +35,7 @@ namespace RepositoryLayer.Service
                 if (userEntity != null)
                     throw new CustomException("Email Id Exists Please Login!!");
                 _bookStoreContext.Users.Add(entity);
+                _email.SendRegisterMail(entity);
                 await _bookStoreContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -74,6 +76,33 @@ namespace RepositoryLayer.Service
             }
 
 
+        }
+
+        public async Task<string> ForgotPassword(string email)
+        {
+            var result = await _bookStoreContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (result == null)
+                throw new CustomException("Enter Valid Email");
+
+            _email.SendResetMail(email,result);
+            return "Email Send SuccessFully";
+        }
+
+        public async Task<bool> ResetPassword(string email, string password)
+        {
+            var result = await _bookStoreContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (result != null)
+            {
+                result.Password = PasswordHashing.Encrypt(password);
+                _bookStoreContext.Users.Update(result);
+                _bookStoreContext.SaveChanges();
+               
+            }
+            else
+            {
+                throw new CustomException("Email is not valid");
+            }
+            return true;
         }
     }
 }

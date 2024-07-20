@@ -111,5 +111,65 @@ namespace BookStore.Controllers
             return StatusCode(201, resmodel);
         }
 
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            try
+            {
+                var result = await _userBL.ResetPassword(model.Email,model.Password);
+                if (result != null)
+                {
+                    resmodel = new ResponseModel()
+                    {
+                        Success = "true",
+                        Message = "Password Changed Successfully",
+                        Data = result
+                    };
+
+                }
+            }
+            catch (CustomException ex)
+            {
+                resmodel = new ResponseModel()
+                {
+                    Success = "false",
+                    Message = ex.Message
+                };
+                return StatusCode(400, resmodel);
+            }
+
+            return StatusCode(201, resmodel);
+        }
+
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            try
+            {
+                var result = await _userBL.ForgotPassword(email);
+                if (result != null)
+                {
+                    resmodel = new ResponseModel()
+                    {
+                        Success = "true",
+                        Message = "User Added Successfully",
+                        Data = result
+                    };
+
+                }
+            }
+            catch (CustomException ex)
+            {
+                resmodel = new ResponseModel()
+                {
+                    Success = "false",
+                    Message = ex.Message
+                };
+                return StatusCode(400, resmodel);
+            }
+
+            return StatusCode(201, resmodel);
+        }
+
     }
 }

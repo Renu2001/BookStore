@@ -10,7 +10,9 @@ namespace RepositoryLayer.Interface
 {
     public interface IUserRL
     {
+        Task<string> ForgotPassword(string email);
         Task<string> Login(LoginModel login);
         Task<UserEntity> Register(UserEntity model);
+        Task<bool> ResetPassword(string email, string password);
     }
 }

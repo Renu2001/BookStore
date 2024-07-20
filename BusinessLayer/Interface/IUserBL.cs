@@ -10,7 +10,9 @@ namespace BusinessLayer.Interface
 {
     public interface IUserBL 
     {
+        Task<string> ForgotPassword(string email);
         Task<string> Login(LoginModel login);
         Task<UserEntity> Register(UserModel model, string role);
+        Task<bool> ResetPassword(string email, string password);
     }
 }

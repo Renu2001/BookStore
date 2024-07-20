@@ -61,6 +61,7 @@ namespace BookStore
             builder.Services.AddScoped<IOrderBL, OrderBL>();
             builder.Services.AddScoped<IWishListRL, WishListRL>();
             builder.Services.AddScoped<IWishListBL, WishListBL>();
+            builder.Services.AddScoped<Email>();
             builder.Services.AddScoped<Token>();
 
 

@@ -23,6 +23,12 @@ namespace BusinessLayer.Service
             this.mediator = mediator;
         }
 
+        public async Task<string> ForgotPassword(string email)
+        {
+            var result = await mediator.Send(new ForgetPasswordCommand(email));
+            return result;
+        }
+
         public async Task<string> Login(LoginModel login)
         {
             var result = await mediator.Send(new GetUserByEmailQuery(login.email,login.password));
@@ -43,17 +49,12 @@ namespace BusinessLayer.Service
             }
         }
 
-        //public async Task<bool> Login(LoginModel login)
-        //{
-        //    try
-        //    {
-        //        var result = await _userQuery.Log(login);
-        //        return result;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
+        public async Task<bool> ResetPassword(string email, string password)
+        {
+            var result = await mediator.Send(new ResetPasswordCommand(email,password));
+            return result;
+        }
+
+       
     }
 }
