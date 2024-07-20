@@ -11,8 +11,8 @@ using RepositoryLayer.Context;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    [Migration("20240719061326_CreateEntity")]
-    partial class CreateEntity
+    [Migration("20240720074533_EntityCreation")]
+    partial class EntityCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,9 +79,6 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int")
                         .HasColumnName("book_Id");
 
-                    b.Property<bool>("IsPurchased")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -144,9 +141,9 @@ namespace RepositoryLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CartId")
+                    b.Property<int>("BookId")
                         .HasColumnType("int")
-                        .HasColumnName("Cart_Id");
+                        .HasColumnName("Book_Id");
 
                     b.Property<int>("CustomersDetailsId")
                         .HasColumnType("int")
@@ -164,7 +161,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("BookId");
 
                     b.HasIndex("CustomersDetailsId");
 
@@ -206,6 +203,31 @@ namespace RepositoryLayer.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entity.WishListEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int")
+                        .HasColumnName("book_Id");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("User_Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WishLists");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entity.BookEntity", b =>
@@ -251,16 +273,16 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RepositoryLayer.Entity.OrderEntity", b =>
                 {
-                    b.HasOne("RepositoryLayer.Entity.CartEntity", "Cart")
+                    b.HasOne("RepositoryLayer.Entity.BookEntity", "Book")
                         .WithMany("Orders")
-                        .HasForeignKey("CartId")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RepositoryLayer.Entity.CustomerDetailsEntity", "CustomersDetails")
                         .WithMany("Orders")
                         .HasForeignKey("CustomersDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RepositoryLayer.Entity.UserEntity", "User")
@@ -269,21 +291,39 @@ namespace RepositoryLayer.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Cart");
+                    b.Navigation("Book");
 
                     b.Navigation("CustomersDetails");
 
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entity.WishListEntity", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entity.BookEntity", "BookEntity")
+                        .WithMany("WishList")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RepositoryLayer.Entity.UserEntity", "UserEntity")
+                        .WithMany("WishList")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("BookEntity");
+
+                    b.Navigation("UserEntity");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entity.BookEntity", b =>
                 {
                     b.Navigation("Carts");
-                });
 
-            modelBuilder.Entity("RepositoryLayer.Entity.CartEntity", b =>
-                {
                     b.Navigation("Orders");
+
+                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entity.CustomerDetailsEntity", b =>
@@ -300,6 +340,8 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("CustomerDetails");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("WishList");
                 });
 #pragma warning restore 612, 618
         }

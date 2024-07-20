@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Context;
+using RepositoryLayer.DTO;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Exceptions;
 using RepositoryLayer.Interface;
@@ -47,19 +48,31 @@ namespace RepositoryLayer.Service
 
         }
 
-        public async Task<List<CartEntity>> GetAllBooksFromCart(int userid)
+        public async Task<CartDTO> GetAllBooksFromCart(int userid)
         {
             try
             {
                 var result = await _bookStoreContext.Carts.Where(x => x.UserId == userid).Include(x => x.UserEntity).Include(x => x.BookEntity).ToListAsync();
                 if (result == null)
                     throw new CustomException("Nothing Found");
-                return result;
+
+                double carttotalprice = 0;
+                foreach (var cart in result)
+                {
+                    carttotalprice += cart.TotalPrice;
+                }
+                var cartList = new CartDTO()
+                {
+                    Carts = result,
+                    TotalPrice = carttotalprice
+                };
+                return cartList;
             }
             catch (Exception ex)
             {
                 throw new CustomException(ex.Message);
             }
+            
         }
 
         public async Task<bool> RemoveBookFromCart(int bookId, int userId)

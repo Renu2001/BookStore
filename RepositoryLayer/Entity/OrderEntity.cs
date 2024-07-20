@@ -19,10 +19,10 @@ namespace RepositoryLayer.Entity
         public int UserEntityId { get; set; }
         public UserEntity User { get; set; }
 
-        [ForeignKey("CartEntity")]
-        [Column("Cart_Id")]
-        public int CartId { get; set; }
-        public CartEntity Cart { get; set; }
+        [ForeignKey("BookEntity")]
+        [Column("Book_Id")]
+        public int BookId { get; set; }
+        public BookEntity Book { get; set; }
 
         [ForeignKey("CustomerDetailsEntity")]
         [Column("CustomersDetails_Id")]

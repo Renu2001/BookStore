@@ -1,4 +1,5 @@
 ﻿using ModelLayer;
+using RepositoryLayer.DTO;
 using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace BusinessLayer.Interface
     {
         Task<CartEntity> AddBookToCart(CartModel model, int id);
         Task<bool> DeleteBookFromCart(int id,int bookid);
-        Task<List<CartEntity>> GetAllBooksFromCart(int id);
+        Task<CartDTO> GetAllBooksFromCart(int id);
         Task<CartEntity> UpdateQuantity(CartModel model, int id);
     }
 }

@@ -18,9 +18,6 @@ namespace RepositoryLayer.Entity
         [Required]
         public int Quantity { get; set; }
 
-        [Required]
-        public bool IsPurchased { get; set; } = false;
-
         [ForeignKey("BookEntity")]
         [Column("book_Id")]
         public int BookId { get; set; }
@@ -33,9 +30,6 @@ namespace RepositoryLayer.Entity
 
         [Required]
         public int TotalPrice {  get; set; }
-
-        [JsonIgnore]
-        public ICollection<OrderEntity> Orders { get; set; }
 
     }
 }

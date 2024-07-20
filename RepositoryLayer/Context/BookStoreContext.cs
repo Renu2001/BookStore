@@ -17,6 +17,8 @@ namespace RepositoryLayer.Context
         public DbSet<CartEntity>? Carts { get; set; }
         public DbSet<CustomerDetailsEntity>? CustomerDetails { get; set; }
         public DbSet <OrderEntity>? Orders { get; set; }
+        public DbSet<WishListEntity>? WishLists { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +42,18 @@ namespace RepositoryLayer.Context
                .HasOne(c => c.User)
                .WithMany(c => c.Orders)
                .HasForeignKey(c => c.UserEntityId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<OrderEntity>()
+               .HasOne(c => c.CustomersDetails)
+               .WithMany(c => c.Orders)
+               .HasForeignKey(c => c.CustomersDetailsId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<WishListEntity>()
+               .HasOne(c => c.UserEntity)
+               .WithMany(c => c.WishList)
+               .HasForeignKey(c => c.UserId)
                .OnDelete(DeleteBehavior.NoAction);
 
         }

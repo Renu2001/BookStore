@@ -4,7 +4,7 @@
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class CreateEntity : Migration
+    public partial class EntityCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,7 +81,6 @@ namespace RepositoryLayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    IsPurchased = table.Column<bool>(type: "bit", nullable: false),
                     book_Id = table.Column<int>(type: "int", nullable: false),
                     User_Id = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<int>(type: "int", nullable: false)
@@ -102,13 +101,38 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WishLists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    book_Id = table.Column<int>(type: "int", nullable: false),
+                    User_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WishLists_Books_book_Id",
+                        column: x => x.book_Id,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WishLists_Users_User_Id",
+                        column: x => x.User_Id,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     User_Id = table.Column<int>(type: "int", nullable: false),
-                    Cart_Id = table.Column<int>(type: "int", nullable: false),
+                    Book_Id = table.Column<int>(type: "int", nullable: false),
                     CustomersDetails_Id = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false)
@@ -117,17 +141,16 @@ namespace RepositoryLayer.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Carts_Cart_Id",
-                        column: x => x.Cart_Id,
-                        principalTable: "Carts",
+                        name: "FK_Orders_Books_Book_Id",
+                        column: x => x.Book_Id,
+                        principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_CustomerDetails_CustomersDetails_Id",
                         column: x => x.CustomersDetails_Id,
                         principalTable: "CustomerDetails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Users_User_Id",
                         column: x => x.User_Id,
@@ -156,9 +179,9 @@ namespace RepositoryLayer.Migrations
                 column: "User_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_Cart_Id",
+                name: "IX_Orders_Book_Id",
                 table: "Orders",
-                column: "Cart_Id");
+                column: "Book_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomersDetails_Id",
@@ -175,15 +198,28 @@ namespace RepositoryLayer.Migrations
                 table: "Users",
                 column: "Email",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishLists_book_Id",
+                table: "WishLists",
+                column: "book_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishLists_User_Id",
+                table: "WishLists",
+                column: "User_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Carts");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Carts");
+                name: "WishLists");
 
             migrationBuilder.DropTable(
                 name: "CustomerDetails");

@@ -4,6 +4,7 @@ using ModelLayer;
 using RepositoryLayer.CQRS.Commands.Book;
 using RepositoryLayer.CQRS.Commands.Cart;
 using RepositoryLayer.CQRS.Queries.Cart;
+using RepositoryLayer.DTO;
 using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace BusinessLayer.Service
             return result;
         }
 
-        public async Task<List<CartEntity>> GetAllBooksFromCart(int userid)
+        public async Task<CartDTO> GetAllBooksFromCart(int userid)
         {
             var result = await mediator.Send(new GetAllBooksByUserIdQuery(userid));
             return result;

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RepositoryLayer.DTO;
 using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryLayer.CQRS.Queries.Cart
 {
-    public class GetAllBooksByUserIdQuery : IRequest <List<CartEntity>>
+    public class GetAllBooksByUserIdQuery : IRequest <CartDTO>
     {
         public int Userid { get; set; }
 

@@ -47,6 +47,9 @@ namespace RepositoryLayer.Entity
         [JsonIgnore]
         public ICollection<WishListEntity> WishList { get; set; }
 
+        [JsonIgnore]
+        public ICollection<OrderEntity> Orders { get; set; }
+
 
     }
 }

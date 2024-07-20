@@ -30,6 +30,9 @@ namespace RepositoryLayer.Service
         {
             try
             {
+                var userEntity = await _bookStoreContext.Users.FirstOrDefaultAsync(x => x.Id == entity.Id);
+                if (userEntity != null)
+                    throw new CustomException("Email Id Exists Please Login!!");
                 _bookStoreContext.Users.Add(entity);
                 await _bookStoreContext.SaveChangesAsync();
             }
